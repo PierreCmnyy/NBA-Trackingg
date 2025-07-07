@@ -5,14 +5,16 @@ import cv2
 
 
 class TeamAssigner:
-    def __init__(self,team_1_class_name="white shirt", team_2_class_name="white shirt"):
+    def __init__(self,team_1_class_name="white shirt", team_2_class_name="blue shirt"):
 
         self.team_1_class_name = team_1_class_name
         self.team_2_class_name = team_2_class_name
         self.player_team_dict = {}  # Dictionary to store player IDs and their assigned teams
+        
     def load_model(self) : 
-        self.model = CLIPModel.from_pretrained("patrickjohncyh/fashion-clip")
-        self.processor = CLIPProcessor.from_pretrained("patrickjohncyh/fashion-clip")
+        self.model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14")
+        self.processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
+
     def get_player_color(self,frame,bbox):
         image = frame[int(bbox[1]):int(bbox[3]), int(bbox[0]):int(bbox[2])] #To crop the image to the player bbox
         
