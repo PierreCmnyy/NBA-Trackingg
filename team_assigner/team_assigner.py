@@ -1,5 +1,5 @@
 from PIL import Image
-from utils import read_stub
+from utils import read_stub,save_stub
 from transformers import CLIPProcessor, CLIPModel
 import cv2
 
@@ -10,7 +10,7 @@ class TeamAssigner:
         self.team_1_class_name = team_1_class_name
         self.team_2_class_name = team_2_class_name
         self.player_team_dict = {}  # Dictionary to store player IDs and their assigned teams
-        
+
     def load_model(self) : 
         self.model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14")
         self.processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
@@ -67,6 +67,8 @@ class TeamAssigner:
             for player_id, player_bbox in player_track.items():
                 team = self.get_player_team(video_frames[frame_num],player_bbox=player_bbox['bbox'], player_id=player_id)
                 player_assignment[frame_num][player_id] = team
+        
+        save_stub(stub_path, player_assignment)
 
         return player_assignment
     

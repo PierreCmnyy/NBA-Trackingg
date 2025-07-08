@@ -2,10 +2,9 @@
 import cv2
 from utils import read_video, save_video
 from trackers import PlayerTracker, BallTracker
-from drawers import (
-    PlayerTracksDrawer,
-    BallTracksDrawer
-)
+from drawers import  PlayerTracksDrawer, BallTracksDrawer, TeamBallControlDrawer
+
+from ball_acquisition import BallAcquisitionDetector
 from team_assigner import TeamAssigner
 def main():
 
@@ -45,14 +44,21 @@ def main():
     
     print(player_teams)
         
+    # Ball acquisition
+    ball_acquisition_detector = BallAcquisitionDetector()
+    ball_acquisition = ball_acquisition_detector.detect_ball_possession(player_tracks, ball_tracks)
+    print(ball_acquisition)
 
+    
     # Draw Output 
     player_tracks_drawer = PlayerTracksDrawer()
     ball_tracks_drawer = BallTracksDrawer()
+    team_ball_control_drawer = TeamBallControlDrawer()
 
     # Draw player tracks on video frames
     output_video_frames = player_tracks_drawer.draw(video_frames, player_tracks,player_teams)
     output_video_frames = ball_tracks_drawer.draw(output_video_frames, ball_tracks)
+    output_video_frames = team_ball_control_drawer.draw(output_video_frames, player_teams, ball_acquisition)
 
     # Save Video
     save_video(output_video_frames, "output_videos/output_video.avi")
