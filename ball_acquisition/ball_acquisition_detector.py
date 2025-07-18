@@ -53,7 +53,8 @@ class BallAcquisitionDetector:
         intersection_y1 = max(py1, by1)
         intersection_x2 = min(px2, bx2)
         intersection_y2 = min(py2, by2)
-
+        if intersection_x2 < intersection_x1 or intersection_y2 < intersection_y1 : 
+            return 0
         intersection_area = (intersection_y2 - intersection_y1) * (intersection_x2 - intersection_x1)
 
         containment_ratio = intersection_area / ball_area 
@@ -75,14 +76,14 @@ class BallAcquisitionDetector:
             if containment > self.containment_threshold : 
                 high_containment_players.append((player_id, containment))
             else :
-                regular_distance_players.append((player_id, containment))
+                regular_distance_players.append((player_id, min_distance))
 
         #First priority 
         if high_containment_players :
             best_candidate = max(high_containment_players, key = lambda x : x[1])
             return(best_candidate[0])
         
-        #Second prio
+        #Second priority
         if regular_distance_players : 
             best_candidate = min(regular_distance_players, key = lambda x : x[1])
             if best_candidate[1] < self.possession_threshold : 
