@@ -56,7 +56,7 @@ def main():
     team_ball_control_drawer = TeamBallControlDrawer()
 
     # Draw player tracks on video frames
-    output_video_frames = player_tracks_drawer.draw(video_frames, player_tracks,player_teams)
+    output_video_frames = player_tracks_drawer.draw(video_frames, player_tracks,ball_acquisition, player_teams)
     output_video_frames = ball_tracks_drawer.draw(output_video_frames, ball_tracks)
     output_video_frames = team_ball_control_drawer.draw(output_video_frames, player_teams, ball_acquisition)
 
