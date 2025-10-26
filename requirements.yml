@@ -1,0 +1,18 @@
+name: nba-analysis
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+
+  - python=3.8
+  - pip
+  - pytorch
+  - torchvision
+  - torchaudio
+  - opencv
+  - jupyter
+  - pip:
+      - matplotlib
+      - tqdm
+      - pandas
+      - numpy
